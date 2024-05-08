@@ -1,69 +1,47 @@
 pipeline {
     agent any
 
+    environment {
+        SONARQUBE_TOKEN = credentials('sonarqube-token')
+    }
+
     stages {
-        stage('Merge Test Branch') {
+        stage('Checkout') {
             steps {
-                // Merge the test branch
-                echo 'Merging test branch..'
-                // Add your branch merging steps here
+                git branch: 'develop', url: 'https://github.com/your-company/your-repo.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                // Build the Docker image
-                echo 'Building Docker image..'
-                // Add your Docker build steps here
+                // Example: using Maven
+                sh 'mvn clean package'
             }
         }
 
-        stage('Vulnerability Scan') {
+        stage('SonarQube Analysis') {
             steps {
-                // Perform vulnerability scan with Trivy
-                echo 'Running vulnerability scan with Trivy..'
-                // Add your Trivy scan steps here
+                script {
+                    def scannerHome = tool 'SonarQube Scanner 4.0';
+                    withSonarQubeEnv('Your SonarQube Server') {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=YourProjectKey -Dsonar.sources=. -Dsonar.host.url=http://your-sonar-url -Dsonar.login=$SONARQUBE_TOKEN"
+                    }
+                }
             }
         }
 
-        stage('Push to Docker') {
+        stage('Dependency Check') {
             steps {
-                // Push the Docker image
-                echo 'Pushing Docker image..'
-                // Add your Docker push steps here
+                dependencyCheck additionalArguments: '--project YourProjectName', odcInstallation: 'Dependency-Check'
             }
         }
 
-        stage('Deploy to Test Environment') {
-            steps {
-                // Deploy the app to a test environment
-                echo 'Deploying app to test environment..'
-                // Add your deployment steps here
-            }
-        }
-
-        stage('Integration Testing') {
-            steps {
-                // Perform integration testing
-                echo 'Running integration tests..'
-                // Add your integration test steps here
-            }
-        }
-
-        stage('Upgrade Prod Deployment') {
-            steps {
-                // If all tests are valid, upgrade the prod deployment with the new version
-                echo 'All tests passed. Upgrading prod deployment..'
-                // Add your prod deployment upgrade steps here
-            }
-        }
+        // Optionally add deployment or further steps
     }
 
     post {
-        success {
-            // Send a Slack notification and merge the test branch to the main branch
-            echo 'Pipeline succeeded. Sending Slack notification and merging test branch to main branch..'
-            // Add your Slack notification and branch merging steps here
+        always {
+            // Cleanup, notifications or other end steps.
         }
     }
 }

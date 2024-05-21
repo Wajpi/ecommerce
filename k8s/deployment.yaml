@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ecomm-product
-        image: wajvi/ecomm-product:latest
+        image: wajvi/ecomm-product-1.0:latest
         ports:
         - containerPort: 8080
         env:

@@ -22,3 +22,19 @@ spec:
         env:
           - name: DB_HOST
             value: "ecomm-db"
+            apiVersion: v1
+---
+kind: Service
+metadata:
+  name: ecomm-product-service
+spec:
+  selector:
+    app: ecomm-product
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+
+
+  

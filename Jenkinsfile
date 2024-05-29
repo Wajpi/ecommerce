@@ -44,6 +44,7 @@ pipeline {
                     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/Wajpi/ecommerce.git'
                 }
         }
+	    /*
          stage("OWASP Dependency Check"){
                 steps {
             
@@ -52,6 +53,7 @@ pipeline {
                 
                 }
          }
+	    */
 
         stage('Build Maven'){
             steps{

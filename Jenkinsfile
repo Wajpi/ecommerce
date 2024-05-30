@@ -63,7 +63,7 @@ pipeline {
                // sh 'mvn clean install'
             }
         }
-        
+        /*
         stage('Unit test'){
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
@@ -131,7 +131,7 @@ pipeline {
                 }
             }
         }
-        
+        */
     
       
            

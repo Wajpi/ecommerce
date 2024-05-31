@@ -73,7 +73,7 @@ pipeline {
             }
         }
         
-  
+  /*
         stage("SonarQube Analysis"){
            steps {
 	           script {
@@ -84,7 +84,8 @@ pipeline {
 	           }	
            }
        }
-	    /*
+       */
+	    
        stage("Quality Gate"){
                    steps {
                        script {
@@ -93,6 +94,7 @@ pipeline {
                     }
         
                 }
+		/*
 	     stage("Trivy Image Scan"){
                 steps{
                     script{

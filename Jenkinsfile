@@ -110,7 +110,7 @@ pipeline {
                         }
                     }
                  }
-	    /*
+	    
            stage("Docker login and Push"){
                steps{
                    script{
@@ -126,7 +126,7 @@ pipeline {
             
             
                 
-           
+           /*
           
             stage('Deploy to Kubernetes') {
             steps {

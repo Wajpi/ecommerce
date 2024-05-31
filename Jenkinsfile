@@ -84,7 +84,7 @@ pipeline {
 	           }	
            }
        }
-	    /*
+	    
        stage("Quality Gate"){
                    steps {
                        script {
@@ -93,6 +93,7 @@ pipeline {
                     }
         
                 }
+	    /*
        stage("Docker Build"){
            steps{
                script{

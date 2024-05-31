@@ -84,7 +84,7 @@ pipeline {
 	           }	
            }
        }
-	    
+	    /*
        stage("Quality Gate"){
                    steps {
                        script {
@@ -93,14 +93,24 @@ pipeline {
                     }
         
                 }
-	    /*
+	     stage("Trivy Image Scan"){
+                steps{
+                    script{
+                        sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/tmp/.cache/ aquasec/trivy image --scanners vuln --timeout 30m wajvi/ecomm-product-1.0:latest > trivy-ecomm.txt"
+
+                    }
+                }
+            }
+	    */
+	    
        stage("Docker Build"){
            steps{
                script{
-                   sh 'cd ecomm-product && docker build -t wajvi/ecomm-product-1.0   .'
+                   sh 'cd ecomm-product && docker build -t wajvi/ecomm-product   .'
                         }
                     }
                  }
+	    /*
            stage("Docker login and Push"){
                steps{
                    script{
@@ -116,15 +126,8 @@ pipeline {
             
             
                 
-            stage("Trivy Image Scan"){
-                steps{
-                    script{
-                        sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/tmp/.cache/ aquasec/trivy image --scanners vuln --timeout 30m wajvi/ecomm-product-1.0:latest > trivy-ecomm.txt"
-
-                    }
-                }
-            }
-            
+           
+          
             stage('Deploy to Kubernetes') {
             steps {
                 script {

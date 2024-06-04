@@ -1,0 +1,268 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-product
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-product
+  template:
+    metadata:
+      labels:
+        app: ecomm-product
+    spec:
+      containers:
+      - name: product
+        image: wajvi/ecomm-product:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-product
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-product
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecomm-db
+  template:
+    metadata:
+      labels:
+        app: ecomm-db
+    spec:
+      containers:
+      - name: db
+        image: wajvi/ecomm-db:latest
+        ports:
+        - containerPort: 8081
+        env:
+        - name: PORT
+          value: "8081"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-db
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-db
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8081
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-cart
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-cart
+  template:
+    metadata:
+      labels:
+        app: ecomm-cart
+    spec:
+      containers:
+      - name: cart
+        image: wajvi/ecomm-cart:latest
+        ports:
+        - containerPort: 8082
+        env:
+        - name: PORT
+          value: "8082"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-cart
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-cart
+  ports:
+  - name: http
+    port: 80
+    targetLab Port: 8082
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecomm-ui
+  template:
+    metadata:
+      labels:
+        app: ecomm-ui
+    spec:
+      containers:
+      - name: ui
+        image: wajvi/ecomm-ui:latest
+        ports:
+        - containerPort: 8083
+        env:
+        - name: PORT
+          value: "8083"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-ui
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-ui
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8083
+
+
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-order
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-order
+  template:
+    metadata:
+      labels:
+        app: ecomm-order
+    spec:
+      containers:
+      - name: order
+        image: wajvi/ecomm-order:latest
+        ports:
+        - containerPort: 8084
+        env:
+        - name: PORT
+          value: "8084"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 150Mi
+          limits:
+            cpu: 250m
+            memory: 300Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-order
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-order
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8084
+
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-user
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-user
+  template:
+    metadata:
+      labels:
+        app: ecomm-user
+    spec:
+      containers:
+      - name: user
+        image: wajvi/ecomm-user:latest
+        ports:
+        - containerPort: 8085
+        env:
+        - name: PORT
+          value: "8085"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-user
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-user
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8085
+---
+---

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-user
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-user
+  template:
+    metadata:
+      labels:
+        app: ecomm-user
+    spec:
+      containers:
+      - name: user
+        image: wajvi/ecomm-user:latest
+        ports:
+        - containerPort: 8085
+        env:
+        - name: PORT
+          value: "8085"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-user
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-user
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8085

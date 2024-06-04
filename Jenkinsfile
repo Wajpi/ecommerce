@@ -1,4 +1,6 @@
-def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order', 'ecomm-user']
+//def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order', 'ecomm-user']
+def microservices = ['ecomm-product']
+
 
 pipeline {
     agent any
@@ -60,8 +62,15 @@ pipeline {
         stage('Build Maven'){
             steps{
                 //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
-               sh 'cd ecomm-product && mvn clean install'
-                //sh "cd ecomm-product && mvn test"
+              // sh 'cd ecomm-product && mvn clean install'
+		script {
+                            for(def microservice in microservices) {
+                                dir("micro-services/${microservice}") {
+                                    sh "mvn clean install"
+                                }
+                            }
+		}
+		//sh "cd ecomm-product && mvn test"
                // sh 'mvn clean install'
             }
         }

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-cart
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-cart
+  template:
+    metadata:
+      labels:
+        app: ecomm-cart
+    spec:
+      containers:
+      - name: cart
+        image: wajvi/ecomm-cart:latest
+        ports:
+        - containerPort: 8082
+        env:
+        - name: PORT
+          value: "8082"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecomm-cart
+spec:
+  type: ClusterIP
+  selector:
+    app: ecomm-cart
+  ports:
+  - name: http
+    port: 80
+    targetLab Port: 8082

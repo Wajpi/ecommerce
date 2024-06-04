@@ -70,17 +70,20 @@ pipeline {
                         }
                     }
                 }
-		//sh "cd ecomm-product && mvn test"
-               // sh 'mvn clean install'
             }
         }
         
         stage('Unit test'){
             steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
-               //sh 'cd ecomm-product && mvn clean install'
-                sh "cd ecomm-product && mvn test"
-               // sh 'mvn clean install'
+                //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
+                //sh "cd ecomm-product && mvn test"
+		    script {
+                    for (def service in microservices) {
+                        dir(service) {
+                            sh 'mvn test'
+                        }
+                    }
+                }
             }
         }
         
@@ -89,8 +92,12 @@ pipeline {
            steps {
 	           script {
 		        withSonarQubeEnv(credentialsId: 'sonarqube-token') { 
-                        sh "cd ecomm-product && mvn sonar:sonar"
-                        //sh "mvn sonar:sonar"
+                        //sh "cd ecomm-product && mvn sonar:sonar"
+	                    for (def service in microservices) {
+	                        dir(service) {
+	                            sh 'mvn sonar:sonar'
+                        		}
+                   		 }
 		        }
 	           }	
            }
@@ -119,7 +126,12 @@ pipeline {
        stage("Docker Build"){
            steps{
                script{
-                   sh 'cd ecomm-product && docker build -t wajvi/ecomm-product   .'
+                   //sh 'cd ecomm-product && docker build -t wajvi/ecomm-product   .'
+                    for (def service in microservices) {
+                        dir(service) {
+				sh "docker build -t wajvi/${service}:latest ."
+                       			}
+                   		}
                         }
                     }
                  }
@@ -129,9 +141,10 @@ pipeline {
                    script{
                        withCredentials([string(credentialsId: 'dockerhub-pwd1', variable: 'dockerhubpwd')]) {
                            sh "docker login -u wajvi -p ${dockerhubpwd} "
-                           sh "docker push wajvi/ecomm-product"
-                    // some block}
-                       
+                           //sh "docker push wajvi/ecomm-product"
+				for (def service in services) {
+					sh "docker push wajvi/${service}:latest"
+                            		sh "docker rmi -f wajvi/${service}:latest"
                         }
                     }
                 }

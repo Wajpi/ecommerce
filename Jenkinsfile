@@ -143,8 +143,8 @@ pipeline {
                            sh "docker login -u wajvi -p ${dockerhubpwd} "
                            //sh "docker push wajvi/ecomm-product"
 				for (def service in services) {
-					sh "docker push wajvi/${service}:latest"
-                            		sh "docker rmi -f wajvi/${service}:latest"
+					sh "docker push ${DOCKERHUB_USERNAME}/${service}:latest"
+                            		//sh "docker rmi -f wajvi/${service}:latest"
                         }
                     }
                 }

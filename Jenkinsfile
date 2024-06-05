@@ -143,7 +143,7 @@ pipeline {
                        withCredentials([string(credentialsId: 'dockerhub-pwd1', variable: 'dockerhubpwd')]) {
                            sh "docker login -u wajvi -p ${dockerhubpwd} "
                            //sh "docker push wajvi/ecomm-product"
-				for (def service in services) {
+				for (def service in microservices) {
 					sh "docker push ${DOCKERHUB_USERNAME}/${service}:latest"
                             		//sh "docker rmi -f wajvi/${service}:latest"
                         }

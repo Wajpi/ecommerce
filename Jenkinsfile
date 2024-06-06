@@ -1,6 +1,5 @@
-def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order']
-//,'ecomm-user']
-//def microservices = ['ecomm-product','ecomm-cart' ]
+def microservices = ['ecomm-cart', 'ecomm-db', 'ecomm-ui','ecomm-user']
+//def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 
 
 pipeline {

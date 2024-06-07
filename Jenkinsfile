@@ -1,5 +1,5 @@
-def microservices = ['ecomm-db']
-//def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
+//def microservices = ['ecomm-db']
+def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 
 
 pipeline {
@@ -40,9 +40,10 @@ pipeline {
          }
 	 */
 	   
-/*
+
         stage('Build Maven'){
             steps{
+		//checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
               // sh 'cd ecomm-product && mvn clean install'
 		script {
                     for (def service in microservices) {
@@ -66,8 +67,7 @@ pipeline {
                 }
             }
         }
-*/
-	    //                //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
+
 
 
   /*

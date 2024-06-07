@@ -1,4 +1,4 @@
-def microservices = ['ecomm-web','ecomm-db','ecomm-ui','ecomm-gateway']
+def microservices = ['ecomm-db','ecomm-ui','ecomm-gateway']
 //def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 
 

@@ -1,4 +1,4 @@
-def microservices = ['ecomm-ui','ecomm-user','ecomm-db']
+def microservices = ['ecomm-web','ecomm-db','ecomm-ui','ecomm-gateway']
 //def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 
 
@@ -59,7 +59,7 @@ pipeline {
                 }
          }
 	 */
-	    
+	 /*   
 
         stage('Build Maven'){
             steps{
@@ -88,7 +88,8 @@ pipeline {
                 }
             }
         }
-        
+
+*/
   /*
         stage("SonarQube Analysis"){
            steps {

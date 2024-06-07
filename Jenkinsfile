@@ -15,27 +15,7 @@ pipeline {
     }
     
     stages{
-        /*
-         stage('Deploy to Kubernetes') {
-            
-            when {
-                expression { (env.BRANCH_NAME == 'test') || (env.BRANCH_NAME == 'master') }
-            }
-            steps {
-                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
-                    script {
-                        if (env.BRANCH_NAME == 'test') {
-                            sh "ssh $MASTER_NODE kubectl apply -f cart.yml"
- 			   sh "ssh $MASTER_NODE kubectl apply -f namespace.yml"                        
-		} else if (env.BRANCH_NAME == 'master') {
-                            sh "ssh $MASTER_NODE kubectl apply -f cart.yml"
- 			   sh "ssh $MASTER_NODE kubectl apply -f namespace.yml"                        
- 			}
-                    }
-                }
-            }
-        }
-        */
+        
     
         stage("Cleanup Workspace"){
                 steps {
@@ -59,11 +39,10 @@ pipeline {
                 }
          }
 	 */
-	 /*   
-
+	   
+/*
         stage('Build Maven'){
             steps{
-                //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
               // sh 'cd ecomm-product && mvn clean install'
 		script {
                     for (def service in microservices) {
@@ -77,7 +56,6 @@ pipeline {
         
         stage('Unit test'){
             steps{
-                //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
                 //sh "cd ecomm-product && mvn test"
 		    script {
                     for (def service in microservices) {
@@ -88,8 +66,10 @@ pipeline {
                 }
             }
         }
-
 */
+	    //                //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])
+
+
   /*
         stage("SonarQube Analysis"){
            steps {

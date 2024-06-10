@@ -1,5 +1,6 @@
 //def microservices = ['ecomm-db']
 def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
+def deployenv = 'test'
 
 
 pipeline {
@@ -135,19 +136,50 @@ pipeline {
 	   }
             
             
-                
-           /*
-          
-            stage('Deploy to Kubernetes') {
+           stage('Get YAML Files') {
+           
             steps {
-                script {
-                    kubernetesDeploy(kubeconfigId: 'id', configs: 'k8s/kubernetes.yaml')
-                
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
+                    script {
+                        sh "rm -f deploy_to_${deployenv}.sh"
+                        sh "wget \"https://raw.githubusercontent.com/youssefrmili/Ecommerce-APP/test/deploy_to_${deployenv}.sh\""
+                        sh "scp deploy_to_${deployenv}.sh $MASTER_NODE:~"
+                        sh "ssh $MASTER_NODE chmod +x deploy_to_${deployenv}.sh"
+                        sh "ssh $MASTER_NODE ./deploy_to_${deployenv}.sh"
+                    }
                 }
             }
         }
-        */
-    
+/*
+        stage('Scan YAML Files') {
+          
+            steps {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
+                    script {
+                        sh "ssh $MASTER_NODE rm -f kubescape_infrastructure_${deployenv}.txt"
+                        sh "ssh $MASTER_NODE rm -f kubescape_microservices_${deployenv}.txt"
+                        sh "ssh $MASTER_NODE 'kubescape scan ${deployenv}_manifests/infrastructure/*.yml > kubescape_infrastructure_${deployenv}.txt'"
+                        sh "ssh $MASTER_NODE 'kubescape scan ${deployenv}_manifests/microservices/*.yml > kubescape_microservices_${deployenv}.txt'"
+                    }
+                }
+            }
+        }
+
+	    
+        stage('Deploy to Kubernetes') {
+            steps {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
+                    script {
+                        sh "ssh $MASTER_NODE kubectl apply -f ${deployenv}_manifests/namespace.yml"
+                        sh "ssh $MASTER_NODE kubectl apply -f ${deployenv}_manifests/infrastructure/"
+                        for (service in services) {
+                            sh "ssh $MASTER_NODE kubectl apply -f ${deployenv}_manifests/microservices/${service}.yml"
+                        }
+                    }
+                }
+            }
+        }
+    */
       
            
        

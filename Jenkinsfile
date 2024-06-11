@@ -1,6 +1,6 @@
 def microservices = ['ecomm-product']
 //def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
-def deployenv = 'test'
+//def deployenv = 'test'
 
 
 pipeline {
@@ -14,6 +14,7 @@ pipeline {
         DOCKERHUB_USERNAME = "wajvi"
 	SSH_CREDENTIALS_ID = 'ssh-id'
         MASTER_NODE = 'master@master-node'
+	deployenv = 'test'
         
     }
     

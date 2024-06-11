@@ -12,6 +12,8 @@ pipeline {
     
     environment {
         DOCKERHUB_USERNAME = "wajvi"
+	SSH_CREDENTIALS_ID = 'ssh-id'
+        MASTER_NODE = 'master@master-node'
         
     }
     
@@ -134,6 +136,14 @@ pipeline {
                 }
             }
 	   }
+	     stage('Test SSH Connection') {
+            steps {
+                sshagent(credentials: [SSH_CREDENTIALS_ID]) {
+                    // Execute a simple command on the remote machine to test SSH connection
+                    sh 'ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} "echo SSH connection successful"'
+                }
+            }
+        }
             
             
            stage('Get YAML Files') {

@@ -140,7 +140,7 @@ pipeline {
             steps {
                 sshagent(credentials: [SSH_CREDENTIALS_ID]) {
                     // Execute a simple command on the remote machine to test SSH connection
-                    sh 'ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} "echo SSH connection successful"'
+                    sh 'ssh -o StrictHostKeyChecking=no $MASTER_NODE "echo SSH connection successful"'
                 }
             }
         }

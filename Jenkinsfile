@@ -1,5 +1,5 @@
-//def microservices = ['ecomm-db']
-def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
+//def microservices = ['ecomm-product']
+//def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 def deployenv = 'test'
 
 
@@ -142,7 +142,7 @@ pipeline {
                 sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
                     script {
                         sh "rm -f deploy_to_${deployenv}.sh"
-                        sh "wget \"https://raw.githubusercontent.com/youssefrmili/Ecommerce-APP/test/deploy_to_${deployenv}.sh\""
+                        sh "wget \"https://raw.githubusercontent.com/Wajpi/ecommerce/test/deploy_to_${deployenv}.sh\""
                         sh "scp deploy_to_${deployenv}.sh $MASTER_NODE:~"
                         sh "ssh $MASTER_NODE chmod +x deploy_to_${deployenv}.sh"
                         sh "ssh $MASTER_NODE ./deploy_to_${deployenv}.sh"

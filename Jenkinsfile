@@ -176,7 +176,7 @@ pipeline {
             }
         }
 
-/*	    
+    
         stage('Deploy to Kubernetes') {
             steps {
                 sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
@@ -190,7 +190,7 @@ pipeline {
                 }
             }
         }
-    */
+    
       
            
        

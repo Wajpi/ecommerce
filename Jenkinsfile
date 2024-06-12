@@ -14,6 +14,7 @@ pipeline {
         DOCKERHUB_USERNAME = "wajvi"
 	SSH_CREDENTIALS_ID = 'ssh-id'
         MASTER_NODE = 'master@master-node'
+	BRANCH_NAME = 'test'
 	deployenv = 'test'
         
     }
@@ -145,7 +146,29 @@ pipeline {
                 }
             }
         }
-            
+
+	    stage('Kube-bench Scan') {
+          
+            steps {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
+                    sh "ssh $MASTER_NODE 'kube-bench > kubebench_CIS_${BRANCH_NAME}.txt'"
+                    sh "ssh $MASTER_NODE cat kubebench_CIS_${BRANCH_NAME}.txt"
+                }
+            }
+        }
+/*
+        stage('Kubescape Scan') {
+            when {
+                expression { (env.BRANCH_NAME == 'test') || (env.BRANCH_NAME == 'master') }
+            }
+            steps {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
+                    sh "ssh $MASTER_NODE 'kubescape scan framework mitre -v > kubescape_mitre_${env.BRANCH_NAME}.txt'"
+                    sh "ssh $MASTER_NODE cat kubescape_mitre_${env.BRANCH_NAME}.txt"
+                }
+            }
+        }
+            */
             
            stage('Get YAML Files') {
            

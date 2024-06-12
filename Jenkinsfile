@@ -146,7 +146,7 @@ pipeline {
                 }
             }
         }
-
+/*
 	    stage('Kube-bench Scan') {
           
             steps {
@@ -156,7 +156,8 @@ pipeline {
                 }
             }
         }
-/*
+
+	    */
         stage('Kubescape Scan') {
             when {
                 expression { (env.BRANCH_NAME == 'test') || (env.BRANCH_NAME == 'master') }
@@ -168,7 +169,7 @@ pipeline {
                 }
             }
         }
-            */
+            
             
            stage('Get YAML Files') {
            

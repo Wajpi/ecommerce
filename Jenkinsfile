@@ -1,4 +1,4 @@
-def microservices = ['ecomm-product']
+def microservices = ['ecomm-web','ecomm-cart', 'ecomm-product', 'ecomm-order']
 //def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 //def deployenv = 'test'
 

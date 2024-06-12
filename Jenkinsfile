@@ -161,7 +161,7 @@ pipeline {
                 }
             }
         }
-/*
+
         stage('Scan YAML Files') {
           
             steps {
@@ -176,7 +176,7 @@ pipeline {
             }
         }
 
-	    
+/*	    
         stage('Deploy to Kubernetes') {
             steps {
                 sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {

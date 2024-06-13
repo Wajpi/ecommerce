@@ -1,5 +1,5 @@
 //def microservices = ['ecomm-web','ecomm-cart', 'ecomm-product', 'ecomm-order']
-def microservices = [ 'ecomm-product']
+def microservices = [ '']
 def frontendservice = ['ecomm-front']
 def services = microservices + frontendservice
 

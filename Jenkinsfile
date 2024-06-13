@@ -1,8 +1,8 @@
 //def microservices = ['ecomm-web','ecomm-cart', 'ecomm-product', 'ecomm-order']
-def microservices = [ '']
+def microservices = [ 'ecomm-product']
 def frontendservice = ['ecomm-front']
-def services = microservices + frontendservice
-
+//def services = microservices + frontendservice
+def services = frontendservice
 
 pipeline {
     agent any

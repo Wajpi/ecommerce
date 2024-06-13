@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-product-deployment
+  labels:
+    app: ecomm-product
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm-product
+  template:
+    metadata:
+      labels:
+        app: ecomm-product
+    spec:
+      containers:
+      - name: ecomm-product
+        image: wajvi/ecomm-product-1.0:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: DB_HOST
+            value: "ecomm-db"
+            apiVersion: v1
+---
+kind: Service
+metadata:
+  name: ecomm-product-service
+spec:
+  selector:
+    app: ecomm-product
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+
+
+  

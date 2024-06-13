@@ -1,7 +1,7 @@
 //def microservices = ['ecomm-web','ecomm-cart', 'ecomm-product', 'ecomm-order']
-//def microservices = [ 'ecomm-product']
-def microservices = [ 'ecomm-web','ecomm-ui']
-//def deployenv = 'test'
+def microservices = [ 'ecomm-product']
+def frontendservice = ['ecomm-front']
+def services = microservices + frontendservice
 
 
 pipeline {
@@ -116,7 +116,7 @@ pipeline {
            steps{
                script{
                    //sh 'cd ecomm-product && docker build -t wajvi/ecomm-product   .'
-                    for (def service in microservices) {
+                    for (def service in services) {
                         dir(service) {
 				sh "docker build -t wajvi/${service}:latest ."
                        			}
@@ -131,7 +131,7 @@ pipeline {
                        withCredentials([string(credentialsId: 'dockerhub-pwd1', variable: 'dockerhubpwd')]) {
                            sh "docker login -u wajvi -p ${dockerhubpwd} "
                            //sh "docker push wajvi/ecomm-product"
-				for (def service in microservices) {
+				for (def service in services) {
 					sh "docker push ${DOCKERHUB_USERNAME}/${service}:latest"
                             		//sh "docker rmi -f wajvi/${service}:latest"
                         }

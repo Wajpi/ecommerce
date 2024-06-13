@@ -45,7 +45,7 @@ pipeline {
                 }
          }
 	 */
-	   
+	   /*
 
         stage('Build Maven'){
             steps{
@@ -75,7 +75,7 @@ pipeline {
         }
 
 
-
+*/
   /*
         stage("SonarQube Analysis"){
            steps {

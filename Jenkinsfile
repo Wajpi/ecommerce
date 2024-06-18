@@ -1,5 +1,5 @@
 //def microservices = ['ecomm-product']
-//def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
+def microservices = ['ecomm-cart', 'ecomm-product', 'ecomm-order' ]
 def deployenv = 'test'
 
 
@@ -30,16 +30,9 @@ pipeline {
                 }
         }
 
-	    /*
-         stage("OWASP Dependency Check"){
-                steps {
-            
-                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-check'
-                //sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
-                
-                }
-         }
-	 */
+	    
+         
+	 
 	   
 
         stage('Build Maven'){
@@ -106,7 +99,14 @@ pipeline {
                 }
             }
 	    */
-	    
+	    stage("OWASP Dependency Check"){
+                steps {
+            
+                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-check'
+                //sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+                
+                }
+         }
        stage("Docker Build"){
            steps{
                script{

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: cart
-          image: youssefrm/ecomm-cart_test
+          image: wajvi/ecomm-cart_test
           ports:
             - containerPort: 8082
           envFrom:

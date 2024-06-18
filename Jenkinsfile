@@ -7,17 +7,12 @@ pipeline {
     agent any
     tools{
         maven 'maven'
-    
-    }
-    
-    environment {
+        }
+        environment {
         DOCKERHUB_USERNAME = "wajvi"
-        
     }
     
-    stages{
-        
-    
+    stages{   
         stage("Cleanup Workspace"){
                 steps {
                 cleanWs()
@@ -28,13 +23,7 @@ pipeline {
                     //git branch: 'main', credentialsId: 'github', url: 'https://github.com/Wajpi/ecommerce.git'
                     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/Wajpi/ecommerce.git'
                 }
-        }
-
-	    
-         
-	 
-	   
-
+        } 
         stage('Build Maven'){
             steps{
 		//checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Wajpi/ecommerce.git']])

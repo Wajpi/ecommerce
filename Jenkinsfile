@@ -124,23 +124,9 @@ pipeline {
             }
 	   }
             
-            
-           stage('Get YAML Files') {
-           
-            steps {
-                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
-                    script {
-                        sh "rm -f deploy_to_${deployenv}.sh"
-                        sh "wget \"https://raw.githubusercontent.com/Wajpi/ecommerce/test/deploy_to_${deployenv}.sh\""
-                        sh "scp deploy_to_${deployenv}.sh $MASTER_NODE:~"
-                        sh "ssh $MASTER_NODE chmod +x deploy_to_${deployenv}.sh"
-                        sh "ssh $MASTER_NODE ./deploy_to_${deployenv}.sh"
-                    }
-                }
-            }
-        }
-/*
-        stage('Scan YAML Files') {
+
+
+	     stage('Scan YAML Files') {
           
             steps {
                 sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
@@ -153,8 +139,21 @@ pipeline {
                 }
             }
         }
-
 	    
+           stage('Get YAML Files') {
+                       steps {
+                sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
+                    script {
+                        sh "rm -f deploy_to_${deployenv}.sh"
+                        sh "wget \"https://raw.githubusercontent.com/Wajpi/ecommerce/test/deploy_to_${deployenv}.sh\""
+                        sh "scp deploy_to_${deployenv}.sh $MASTER_NODE:~"
+                        sh "ssh $MASTER_NODE chmod +x deploy_to_${deployenv}.sh"
+                        sh "ssh $MASTER_NODE ./deploy_to_${deployenv}.sh"
+                    }
+                }
+            }
+        }
+  
         stage('Deploy to Kubernetes') {
             steps {
                 sshagent(credentials: [env.SSH_CREDENTIALS_ID]) {
@@ -168,7 +167,7 @@ pipeline {
                 }
             }
         }
-    */
+    
       
            
        
